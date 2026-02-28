@@ -1,0 +1,932 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Portfolio — Akash Gojuru</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0a0f;
+    --surface: #12121a;
+    --border: #1e1e2e;
+    --accent: #c9a96e;
+    --accent2: #7c6af7;
+    --text: #e8e6f0;
+    --muted: #6b6880;
+    --card: #161622;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    overflow-x: hidden;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.2rem 4rem;
+    background: rgba(10,10,15,0.85);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem;
+    color: var(--accent);
+    letter-spacing: 0.02em;
+  }
+
+  nav ul {
+    list-style: none;
+    display: flex;
+    gap: 2.5rem;
+  }
+
+  nav a {
+    text-decoration: none;
+    color: var(--muted);
+    font-size: 0.85rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    transition: color 0.3s;
+  }
+
+  nav a:hover { color: var(--accent); }
+
+  /* ── HERO / ABOUT ── */
+  #about {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    padding: 8rem 4rem 4rem;
+    gap: 4rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  #about::before {
+    content: '';
+    position: absolute;
+    width: 600px; height: 600px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(124,106,247,0.12) 0%, transparent 70%);
+    top: -100px; right: -100px;
+    pointer-events: none;
+  }
+
+  #about::after {
+    content: '';
+    position: absolute;
+    width: 400px; height: 400px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(201,169,110,0.08) 0%, transparent 70%);
+    bottom: 0; left: 200px;
+    pointer-events: none;
+  }
+
+  .about-text { position: relative; z-index: 1; }
+
+  .about-tag {
+    display: inline-block;
+    font-size: 0.75rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    border: 1px solid var(--accent);
+    padding: 0.3rem 0.8rem;
+    border-radius: 100px;
+    margin-bottom: 1.5rem;
+    animation: fadeUp 0.8s ease both;
+  }
+
+  h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.8rem, 5vw, 4.5rem);
+    line-height: 1.1;
+    font-weight: 900;
+    margin-bottom: 1.5rem;
+    animation: fadeUp 0.8s 0.1s ease both;
+  }
+
+  h1 span { color: var(--accent); }
+
+  .about-bio {
+    color: var(--muted);
+    line-height: 1.8;
+    font-size: 1rem;
+    max-width: 480px;
+    margin-bottom: 2rem;
+    animation: fadeUp 0.8s 0.2s ease both;
+  }
+
+  .btn {
+    display: inline-block;
+    padding: 0.8rem 2rem;
+    background: var(--accent);
+    color: #0a0a0f;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 500;
+    font-size: 0.85rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    text-decoration: none;
+    border-radius: 4px;
+    transition: transform 0.2s, box-shadow 0.2s;
+    animation: fadeUp 0.8s 0.3s ease both;
+  }
+
+  .btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(201,169,110,0.3);
+  }
+
+  .about-image {
+    position: relative;
+    z-index: 1;
+    animation: fadeUp 0.8s 0.2s ease both;
+  }
+
+  .about-image-frame {
+    width: 100%;
+    aspect-ratio: 3/4;
+    max-width: 420px;
+    margin: 0 auto;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+    position: relative;
+  }
+
+  .about-image-frame::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(124,106,247,0.1), transparent);
+    z-index: 1;
+  }
+
+  .about-image-frame img,
+  .img-placeholder {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--surface);
+    color: var(--muted);
+    font-size: 0.85rem;
+    letter-spacing: 0.1em;
+  }
+
+  .img-placeholder {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .img-placeholder svg { opacity: 0.3; }
+
+  /* ── SECTIONS ── */
+  section {
+    padding: 6rem 4rem;
+  }
+
+  .section-label {
+    font-size: 0.72rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 0.5rem;
+  }
+
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 700;
+    margin-bottom: 3rem;
+    line-height: 1.15;
+  }
+
+  .divider {
+    width: 60px; height: 2px;
+    background: var(--accent);
+    margin-bottom: 3rem;
+  }
+
+  /* ── PROJECTS ── */
+  #projects { background: var(--surface); }
+
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+
+  .project-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+    transition: transform 0.3s, border-color 0.3s;
+    cursor: pointer;
+  }
+
+  .project-card:hover {
+    transform: translateY(-6px);
+    border-color: var(--accent);
+  }
+
+  .project-img {
+    width: 100%;
+    aspect-ratio: 16/10;
+    object-fit: cover;
+    background: var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--muted);
+    font-size: 0.8rem;
+    letter-spacing: 0.1em;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .project-img-placeholder {
+    width: 100%;
+    aspect-ratio: 16/10;
+    background: linear-gradient(135deg, var(--border), var(--surface));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 0.5rem;
+    color: var(--muted);
+    font-size: 0.78rem;
+    letter-spacing: 0.08em;
+  }
+
+  .project-img-placeholder svg { opacity: 0.25; }
+
+  /* To add real project images, replace .project-img-placeholder with:
+     <img src="your-image.jpg" class="project-img" alt="Project Name"> */
+
+  .project-body { padding: 1.5rem; }
+
+  .project-tag {
+    font-size: 0.68rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--accent2);
+    margin-bottom: 0.5rem;
+  }
+
+  .project-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.2rem;
+    margin-bottom: 0.6rem;
+  }
+
+  .project-desc {
+    color: var(--muted);
+    font-size: 0.88rem;
+    line-height: 1.7;
+    margin-bottom: 1rem;
+  }
+
+  .project-link {
+    font-size: 0.78rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    transition: gap 0.2s;
+  }
+
+  .project-link:hover { gap: 0.7rem; }
+
+  /* ── SENIOR DESIGN ── */
+  #senior-design {
+    background: var(--bg);
+  }
+
+  .senior-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    align-items: start;
+  }
+
+  .senior-text p {
+    color: var(--muted);
+    line-height: 1.85;
+    margin-bottom: 1rem;
+    font-size: 0.95rem;
+  }
+
+  .senior-details {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 2rem;
+  }
+
+  .detail-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 1rem 0;
+    border-bottom: 1px solid var(--border);
+    gap: 1rem;
+  }
+
+  .detail-item:last-child { border-bottom: none; }
+
+  .detail-label {
+    font-size: 0.72rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--muted);
+    flex-shrink: 0;
+  }
+
+  .detail-value {
+    font-size: 0.92rem;
+    text-align: right;
+    color: var(--text);
+  }
+
+  /* ── REFLECTION ── */
+  #reflection { background: var(--surface); }
+
+  .reflection-content {
+    max-width: 760px;
+  }
+
+  .reflection-content p {
+    color: var(--muted);
+    line-height: 1.9;
+    margin-bottom: 1.2rem;
+    font-size: 0.98rem;
+  }
+
+  blockquote {
+    border-left: 3px solid var(--accent);
+    margin: 2rem 0;
+    padding: 1rem 1.5rem;
+    background: rgba(201,169,110,0.04);
+    border-radius: 0 8px 8px 0;
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    font-style: italic;
+    color: var(--text);
+    line-height: 1.7;
+  }
+
+  /* ── RESUME ── */
+  #resume { background: var(--bg); }
+
+  .resume-preview {
+    display: flex;
+    align-items: center;
+    gap: 3rem;
+    flex-wrap: wrap;
+  }
+
+  .resume-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 3rem;
+    flex: 1;
+    min-width: 260px;
+    max-width: 380px;
+    text-align: center;
+  }
+
+  .resume-icon {
+    width: 60px; height: 60px;
+    margin: 0 auto 1.5rem;
+    background: rgba(201,169,110,0.1);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .resume-desc {
+    color: var(--muted);
+    font-size: 0.88rem;
+    line-height: 1.7;
+    margin-bottom: 1.5rem;
+  }
+
+  .resume-highlights {
+    flex: 1;
+    min-width: 260px;
+  }
+
+  .resume-highlights h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .highlight-item {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1.2rem;
+    align-items: flex-start;
+  }
+
+  .highlight-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--accent);
+    margin-top: 0.45rem;
+    flex-shrink: 0;
+  }
+
+  .highlight-text { color: var(--muted); font-size: 0.9rem; line-height: 1.6; }
+
+  /* ── CONTACT ── */
+  #contact { background: var(--surface); }
+
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: start;
+  }
+
+  .contact-intro p {
+    color: var(--muted);
+    line-height: 1.8;
+    margin-bottom: 1.5rem;
+    font-size: 0.95rem;
+  }
+
+  .contact-links {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-top: 1.5rem;
+  }
+
+  .contact-link-item {
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: color 0.2s;
+  }
+
+  .contact-link-item:hover { color: var(--accent); }
+
+  .contact-link-icon {
+    width: 36px; height: 36px;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    transition: border-color 0.2s;
+  }
+
+  .contact-link-item:hover .contact-link-icon { border-color: var(--accent); }
+
+  .contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+
+  label {
+    font-size: 0.72rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  input, textarea {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 0.75rem 1rem;
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.9rem;
+    outline: none;
+    transition: border-color 0.2s;
+    width: 100%;
+  }
+
+  input:focus, textarea:focus { border-color: var(--accent); }
+
+  textarea { resize: vertical; min-height: 130px; }
+
+  .btn-submit {
+    background: var(--accent);
+    color: #0a0a0f;
+    border: none;
+    padding: 0.85rem 2rem;
+    border-radius: 6px;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 500;
+    font-size: 0.85rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    align-self: flex-start;
+  }
+
+  .btn-submit:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(201,169,110,0.3);
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    padding: 2rem 4rem;
+    background: var(--bg);
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: var(--muted);
+    font-size: 0.8rem;
+  }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+
+  .reveal.visible {
+    opacity: 1;
+    transform: none;
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    nav { padding: 1rem 2rem; }
+    nav ul { gap: 1.5rem; }
+    #about { grid-template-columns: 1fr; padding: 7rem 2rem 4rem; }
+    .about-image { order: -1; }
+    .about-image-frame { max-width: 300px; }
+    section { padding: 4rem 2rem; }
+    .projects-grid { grid-template-columns: 1fr; }
+    .senior-grid,
+    .contact-grid { grid-template-columns: 1fr; gap: 2rem; }
+    footer { flex-direction: column; gap: 0.5rem; text-align: center; }
+  }
+
+  @media (max-width: 600px) {
+    nav ul { display: none; }
+    .projects-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="logo">AKASH GOJURU</div>
+  <ul>
+    <li><a href="#about">About</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#senior-design">Senior Design</a></li>
+    <li><a href="#reflection">Reflection</a></li>
+    <li><a href="#resume">Resume</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-text">
+<!--    <span class="about-tag">Portfolio 2025</span>-->
+    <h1>Hi, I'm <span>AKASH GOJURU</span></h1>
+    <p class="about-bio">
+      <!-- EDIT: Replace with your bio -->
+      I'm a Computer Engineering student at Iowa State University, passionate about digital hardware design, embedded systems, and computer vision. I love building hardware and software projects and solving real-world problems through efficient system design and engineering. Currently seeking opportunities in hardware engineering and chip design internships.
+    </p>
+    <a href="#contact" class="btn">Get In Touch →</a>
+  </div>
+  <div class="about-image">
+    <div class="about-image-frame">
+      <img src="WhatsApp Image 2026-02-27 at 21.08.52.jpeg" alt="Your Name">
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="reveal">
+    <p class="section-label">My Work</p>
+    <h2 class="section-title">Projects</h2>
+    <div class="divider"></div>
+  </div>
+
+  <div class="projects-grid">
+
+    <!-- PROJECT 1 -->
+    <div class="project-card reveal">
+      <img src="WhatsApp Image 2026-02-27 at 19.55.56.jpeg" class="project-img" alt="Project 1">
+      <div class="project-body">
+        <h3 class="project-title">RISC-V 5-Stage Pipelined Processor</h3>
+        <p class="project-desc">we built a RISC-V processor step by step and finished with a complete 5-stage pipelined CPU (IF, ID, EX, MEM, WB). We added pipeline registers, forwarding, hazard detection, stalls, and branch logic so instructions run correctly each cycle. This was a team project with two members. My partner handled most of the RTL coding, and I supported by reviewing the design, finding bugs, and suggesting fixes for control and data hazards. I also wrote most of the design documents, including datapath and control signal explanations. We tested the processor using RARS assembly (.s) files and used QuestaSim waveforms to verify timing and debug pipeline behavior. We also ran many instruction sequences to confirm correct register updates, memory access, and branch/jump results. Finally, we improved modularity by organizing the ALU, register file, control unit, and memory interface into reusable VHDL components.</p>
+      </div>
+    </div>
+
+    <!-- PROJECT 2 -->
+    <div class="project-card reveal">
+      <img src="WhatsApp Image 2026-02-27 at 20.06.52.jpeg" class="project-img" alt="Project 2">
+      <div class="project-body">
+        <h3 class="project-title">CyBot Roomba Project</h3>
+        <p class="project-desc">In CPRE 2880, I worked on a semester-long embedded systems lab using the CyBot robot. Each week, we implemented new features in C, which helped me improve my programming skills and understand how microcontrollers interact with real hardware. I learned how to use timers, interrupts, UART communication, and both analog and digital peripherals, and I practiced debugging with real sensor data. For the final project, my team of three programmed the CyBot to navigate an obstacle course like a moon rover. The biggest challenge was that the operator could not see the robot or the course, so we had to rely completely on sensors such as bump sensors and IR/PING distance scanners. We designed and tested a solution that could detect obstacles, avoid holes and boundary lines, and safely move through the course. This project strengthened my teamwork, problem solving, and embedded system design skills.</p>
+      </div>
+    </div>
+
+    <!-- PROJECT 3 -->
+    <div class="project-card reveal">
+      <img src="wnk.png" class="project-img" alt="Project 2">
+      <div class="project-body">
+        <h3 class="project-title">Weighless Neural Network</h3>
+        <p class="project-desc">I worked on a Weightless Neural Network (WNN) project based on the WiSARD model, which performs classification using RAM-like memory instead of traditional weighted multiplications. The idea is to convert each input sample into a binary vector and split it into small groups of bits. Each group is used as an address to a memory table, and the model learns by incrementing counts in those memory locations during training. For inference, the same addresses are generated and the counts are summed to produce a score for each class. I implemented the hashing/addressing approach H3-style constants to distribute bits across memory and reduce collisions. I verified correctness using test inputs and measured classification accuracy while exploring tradeoffs between memory size, number of discriminators, and performance. This project helped me understand lightweight ML hardware concepts and why WNNs can be efficient for edge devices.</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- SENIOR DESIGN -->
+<section id="senior-design">
+  <div class="reveal">
+    <h2 class="section-title">Senior Design</h2>
+    <div class="divider"></div>
+  </div>
+
+  <div class="senior-grid">
+    <div class="senior-text reveal">
+      <p>
+       Our senior design project is to build an open-source Bluetooth Low Energy (BLE) microcontroller. My team is mainly working on the digital Link Layer controller, which is the part that handles advertising, scanning, making a connection, and sending data. We are working on this project for two semesters with the ChipForge team and our faculty advisor.
+      </p>
+      <p>
+My role is on the digital Link Layer design. I read the BLE Link Layer spec and turned it into clear hardware tasks. I made summary sheets for the main PDUs used in advertising, scanning, and connecting, and I noted important header bits like TxAdd, RxAdd, ChSel, and Length. I also studied Channel Selection Algorithm #1 (CSA#1) to understand how BLE hops channels during a connection. Next, I will start helping with PDU decode and PDU generation, and connect them to the state machine and test cases for the MVP flow advertising → scanning → connection.
+      </p>
+    </div>
+    <div class="senior-details reveal">
+      <div class="detail-item">
+        <span class="detail-label">Project Title</span>
+        <span class="detail-value">Open-sourced Radio Microcontroller</span>
+      </div>
+      <div class="detail-item">
+        <span class="detail-label">Advisor</span>
+        <span class="detail-value">Dr. Henry Duwe</span>
+      </div>
+      <div class="detail-item">
+        <span class="detail-label">Client</span>
+        <span class="detail-value">Dr. Henry Duwe</span>
+      </div>
+      <div class="detail-item">
+        <span class="detail-label">Duration</span>
+        <span class="detail-value">Jan 2026 – Dec 2026</span>
+      </div>
+      <div class="detail-item">
+        <span class="detail-label">Technologies</span>
+        <span class="detail-value">Python, C, Verilog, etc.</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!--&lt;!&ndash; REFLECTION &ndash;&gt;-->
+<!--<section id="reflection">-->
+<!--  <div class="reveal">-->
+<!--    <p class="section-label">Looking Back</p>-->
+<!--    <h2 class="section-title">Reflection</h2>-->
+<!--    <div class="divider"></div>-->
+<!--  </div>-->
+
+<!--  <div class="reflection-content reveal">-->
+<!--    <p>-->
+<!--      &lt;!&ndash; EDIT: Write your personal reflection here &ndash;&gt;-->
+<!--      Throughout my time at [University], I have grown not just as an engineer but as a problem solver and collaborator. Looking back, the experiences that shaped me most were [mention key experiences].-->
+<!--    </p>-->
+
+<!--    <blockquote>-->
+<!--      "Replace this with a meaningful quote that resonates with your journey — from a professor, a book, or your own words."-->
+<!--    </blockquote>-->
+
+<!--    <p>-->
+<!--      My senior year, particularly through the senior design experience, challenged me to apply everything I had learned in a real-world context. I had to manage [challenges you faced] while delivering [what you delivered].-->
+<!--    </p>-->
+<!--    <p>-->
+<!--      Moving forward, I am excited to [your goals / what you're looking forward to]. The foundation I have built here will guide me as I [next steps in career/life].-->
+<!--    </p>-->
+<!--  </div>-->
+<!--</section>-->
+
+<section id="resume">
+  <div class="reveal">
+    <p class="section-label">Background</p>
+    <h2 class="section-title">Reflection</h2>
+    <div class="divider"></div>
+  </div>
+
+  <div class="resume-preview reveal">
+    <div class="resume-card">
+      <div class="resume-icon">
+        <svg width="28" height="28" fill="none" stroke="#c9a96e" stroke-width="1.5" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14,2 14,8 20,8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10,9 9,9 8,9"/></svg>
+      </div>
+      <h3 style="font-family:'Playfair Display',serif; margin-bottom:0.8rem;">Download Reflection</h3>
+      <p class="resume-desc">Get a full copy of my Reflection.</p>
+      <!-- EDIT: Replace # with your actual resume file link -->
+      <a href="Cumulative Reflection_1 (1).pdf" class="btn" download>Download Reflection</a>
+    </div>
+
+    <div class="resume-highlights">
+      <h3>Description</h3>
+
+      <div class="highlight-item">
+        <div class="highlight-dot"></div>
+        <p class="highlight-text">In CPRE 4940 Portfolio, we also discussed our overall experience during our undergraduate studies. We compared our original expectations before coming to the university with what we actually experienced. We also reflected on how our learning, skills, and depth of thinking have grown and improved throughout our time in college.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- RESUME -->
+<section id="resume">
+  <div class="reveal">
+    <p class="section-label">Background</p>
+    <h2 class="section-title">Resume</h2>
+    <div class="divider"></div>
+  </div>
+
+  <div class="resume-preview reveal">
+    <div class="resume-card">
+      <div class="resume-icon">
+        <svg width="28" height="28" fill="none" stroke="#c9a96e" stroke-width="1.5" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14,2 14,8 20,8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10,9 9,9 8,9"/></svg>
+      </div>
+      <h3 style="font-family:'Playfair Display',serif; margin-bottom:0.8rem;">Download Resume</h3>
+      <p class="resume-desc">Get a full copy of my resume including education, experience, skills, and achievements.</p>
+      <!-- EDIT: Replace # with your actual resume file link -->
+      <a href="RESUME_IBM_1.pdf" class="btn" download>Download PDF</a>
+    </div>
+
+    <div class="resume-highlights">
+      <h3>Highlights</h3>
+
+      <div class="highlight-item">
+        <div class="highlight-dot"></div>
+        <p class="highlight-text"><strong style="color:var(--text)">Education:</strong> B.S. in Iowa State University.</p>
+      </div>
+      <div class="highlight-item">
+        <div class="highlight-dot"></div>
+        <p class="highlight-text"><strong style="color:var(--text)">Experience:</strong> Tech Support Assistant, Iowa State University (CELT). </p>
+      </div>
+      <div class="highlight-item">
+        <div class="highlight-dot"></div>
+        <p class="highlight-text"><strong style="color:var(--text)">Skills:</strong> VHDL, Verilog, C++, Java, C, Python.</p>
+      </div>
+      <div class="highlight-item">
+        <div class="highlight-dot"></div>
+        <p class="highlight-text"><strong style="color:var(--text)">Awards:</strong> Deans List.</p>
+      </div>
+      <div class="highlight-item">
+        <div class="highlight-dot"></div>
+        <p class="highlight-text"><strong style="color:var(--text)">Activities:</strong> ChipForge Club.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="reveal">
+    <p class="section-label">Let's Connect</p>
+    <h2 class="section-title">Contact</h2>
+    <div class="divider"></div>
+  </div>
+
+  <div class="contact-grid">
+    <div class="contact-intro reveal">
+      <p>I'm always open to discussing new opportunities, collaborations, or just having a conversation about technology and ideas. Feel free to reach out!</p>
+
+      <div class="contact-links">
+        <a href="mailto:gojuru18@iastate.edu" class="contact-link-item">
+          <div class="contact-link-icon">
+            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          </div>
+          gojuru18@iastate.edu
+        </a>
+        <a href="https://www.linkedin.com/in/akash-gojuru/" class="contact-link-item" target="_blank">
+          <div class="contact-link-icon">
+            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+          </div>
+          LinkedIn — Akash Gojuru
+        </a>
+        <a href="https://github.com/Gakshith" class="contact-link-item" target="_blank">
+          <div class="contact-link-icon">
+            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22"/></svg>
+          </div>
+          GitHub — Gakash
+        </a>
+      </div>
+    </div>
+
+    <form class="contact-form reveal" onsubmit="handleSubmit(event)">
+      <div class="form-group">
+        <label for="name">Name</label>
+        <input type="text" id="name" placeholder="Your full name" required>
+      </div>
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" id="email" placeholder="your@email.com" required>
+      </div>
+      <div class="form-group">
+        <label for="message">Message</label>
+        <textarea id="message" placeholder="Write your message here..." required></textarea>
+      </div>
+      <button type="submit" class="btn-submit">Send Message →</button>
+    </form>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<script>
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), i * 80);
+      }
+    });
+  }, { threshold: 0.1 });
+  reveals.forEach(el => observer.observe(el));
+
+  // Contact form
+  function handleSubmit(e) {
+    e.preventDefault();
+    const btn = e.target.querySelector('.btn-submit');
+    btn.textContent = 'Message Sent ✓';
+    btn.style.background = '#4ade80';
+    setTimeout(() => {
+      btn.textContent = 'Send Message →';
+      btn.style.background = '';
+      e.target.reset();
+    }, 3000);
+    // TIP: To actually send emails, connect this form to Formspree or EmailJS
+  }
+
+  // Active nav highlight on scroll
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('nav a');
+  window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(sec => {
+      if (window.scrollY >= sec.offsetTop - 120) current = sec.getAttribute('id');
+    });
+    navLinks.forEach(a => {
+      a.style.color = a.getAttribute('href') === `#${current}` ? '#c9a96e' : '';
+    });
+  });
+</script>
+</body>
+</html>
